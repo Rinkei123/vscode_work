@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.jp.mri_itstudy.vcoupon.dao.CouponDao">
+    <select id="getCouponRecommendList" parameterType="co.jp.mri_itstudy.vcoupon.entity.CouponEntity" resultMap="CouponRecommendList">
+        select 
+                * 
+        from 
+            vcoupon_coupon
+        where 
+            coupon_status = 1
+            <if test="couponEntity.couponRecommend != null">
+                AND coupon_recommend = #{couponEntity.couponRecommend}
+            </if>
+        order by 
+            ${sortKey} ${sort} 
+        limit #{startIndex},#{count};   
+    </select>
+    <select id="getCouponShop" 
+    parameterType="co.jp.mri_itstudy.vcoupon.entity.CouponEntity" 
+    resultMap="CouponShopMap">   
+        select * 
+        from vcoupon_coupon  vc
+        left join   vcoupon_shop vs on vc.shop_id = vs.shop_id
+        where vc.coupon_status = 1
+        <if test="couponEntity.couponRecommend != null">
+                AND coupon_recommend = #{couponEntity.couponRecommend}
+            </if>
+        order by 
+            ${sortKey} ${sort} 
+        limit #{startIndex},#{count};
+            
+    </select>
+    <resultMap id="CouponRecommendList" type="co.jp.mri_itstudy.vcoupon.entity.CouponEntity">
+        <result column="coupon_id" property="couponId" />
+        <result column="coupon_name" property="couponName" />
+        <result column="coupon_type" property="couponType" />
+        <result column="coupon_discount_amount" property="couponDiscountAmount" />
+        <result column="coupon_minimum_purchase_amount" property="couponMinimumPurchaseAmount" />
+        <result column="coupon_ctime" property="couponCtime" />
+        <result column="coupon_start_date" property="couponStartDate" />
+        <result column="coupon_end_date" property="couponEndDate" />
+        <result column="coupon_status" property="couponStatus" />
+        <result column="coupon_quantity" property="couponQuantity" />
+        <result column="coupon_description" property="couponDescription" />
+        <result column="coupon_img_1" property="couponImg1" />
+        <result column="coupon_img_2" property="couponImg2" />
+        <result column="coupon_img_3" property="couponImg3" />
+        <result column="coupon_recommend" property="couponRecommend" />
+        <result column="shop_id" property="shopId" />
+    </resultMap>
+
+    <resultMap id="CouponShopMap" type="co.jp.mri_itstudy.vcoupon.entity.CouponShopEntity">
+        <result column="coupon_id" property="couponId" />
+        <result column="coupon_name" property="couponName" />
+        <result column="coupon_type" property="couponType" />
+        <result column="coupon_discount_amount" property="couponDiscountAmount" />
+        <result column="coupon_minimum_purchase_amount" property="couponMinimumPurchaseAmount" />
+        <result column="coupon_ctime" property="couponCtime" />
+        <result column="coupon_start_date" property="couponStartDate" />
+        <result column="coupon_end_date" property="couponEndDate" />
+        <result column="coupon_status" property="couponStatus" />
+        <result column="coupon_quantity" property="couponQuantity" />
+        <result column="coupon_description" property="couponDescription" />
+        <result column="coupon_img_1" property="couponImg1" />
+        <result column="coupon_img_2" property="couponImg2" />
+        <result column="coupon_img_3" property="couponImg3" />
+        <result column="coupon_recommend" property="couponRecommend" />
+        <result column="shop_id" property="shopId" />
+        <result column="shop_name" property="shopName" />
+    </resultMap>
+         <!-- 获取coupon列表 一览-->
+         <select id="getCouponShopList" resultMap="CouponShopAll" parameterType="co.jp.mri_itstudy.vcoupon.entity.CouponShopEntity">
+            select * from vcoupon_coupon vc
+            left join vcoupon_shop vs on vs.shop_id=vc.shop_id
+            where vc.coupon_status =1 
+            limit 
+                #{startIndex},#{count};   
+        </select>
+        <resultMap id="CouponShopAll" type="co.jp.mri_itstudy.vcoupon.entity.CouponShopEntity">
+            <result column="coupon_id" property="couponId" />
+            <result column="coupon_name" property="couponName" />
+            <result column="coupon_type" property="couponType" />
+            <result column="coupon_discount_amount" property="couponDiscountAmount" />
+            <result column="coupon_minimum_purchase_amount" property="couponMinimumPurchaseAmount" />
+            <result column="coupon_ctime" property="couponCtime" />
+            <result column="coupon_start_date" property="couponStartDate" />
+            <result column="coupon_end_date" property="couponEndDate" />
+            <result column="coupon_status" property="couponStatus" />
+            <result column="coupon_quantity" property="couponQuantity" />
+            <result column="coupon_description" property="couponDescription" />
+            <result column="coupon_img_1" property="couponImg1" />
+            <result column="coupon_img_2" property="couponImg2" />
+            <result column="coupon_img_3" property="couponImg3" />
+            <result column="coupon_recommend" property="couponRecommend" />
+            <result column="shop_id" property="shopId" />
+            <result column="shop_name" property="shopName" /> 
+        </resultMap>
+                <!-- 获取coupon-->
+                <select id="getCoupon" resultMap="Coupon" parameterType="co.jp.mri_itstudy.vcoupon.entity.CouponShopEntity">
+                    select * from vcoupon_coupon vc
+                    left join vcoupon_shop vs on vs.shop_id=vc.shop_id
+                    where vc.coupon_id =#{id};    
+                </select>
+                <resultMap id="Coupon" type="co.jp.mri_itstudy.vcoupon.entity.CouponShopEntity">
+                    <result column="coupon_id" property="couponId" />
+                    <result column="coupon_name" property="couponName" />
+                    <result column="coupon_type" property="couponType" />
+                    <result column="coupon_discount_amount" property="couponDiscountAmount" />
+                    <result column="coupon_minimum_purchase_amount" property="couponMinimumPurchaseAmount" />
+                    <result column="coupon_ctime" property="couponCtime" />
+                    <result column="coupon_start_date" property="couponStartDate" />
+                    <result column="coupon_end_date" property="couponEndDate" />
+                    <result column="coupon_status" property="couponStatus" />
+                    <result column="coupon_quantity" property="couponQuantity" />
+                    <result column="coupon_description" property="couponDescription" />
+                    <result column="coupon_img_1" property="couponImg1" />
+                    <result column="coupon_img_2" property="couponImg2" />
+                    <result column="coupon_img_3" property="couponImg3" />
+                    <result column="coupon_recommend" property="couponRecommend" />
+                    <result column="shop_id" property="shopId" />
+                    <result column="shop_name" property="shopName" /> 
+                </resultMap>
+                <select id="count" resultType="Integer">
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        vcoupon_coupon
+                    where coupon_status =1;
+                    </select>  
+</mapper>

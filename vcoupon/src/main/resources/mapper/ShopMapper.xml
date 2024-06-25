@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.jp.mri_itstudy.vcoupon.dao.ShopDao">
+
+<!-- shop -->
+<select id="getShops"  resultMap="ShopMap">
+    SELECT *
+    FROM vcoupon_shop
+    WHERE shop_status = 0
+    ORDER BY ${sortKey} ${sort}
+    LIMIT #{startIndex}, #{count};
+</select>
+
+<!--shop  -->
+<resultMap id="ShopMap" type="co.jp.mri_itstudy.vcoupon.entity.ShopEntity">
+    <id property="shopId" column="shopId"/>
+    <result property="shopName" column="shop_name"/>
+    <result property="shopImg" column="shop_img"/>
+    <result property="shopCtime" column="shop_ctime"/>
+    <result property="shopStatus" column="shop_status"/>
+    <result property="shopDescription" column="shop_description"/>
+    <result property="categoryId" column="category_id"/>
+    <result property="shopCouponCount" column="shop_coupon_count"/>
+    <result property="shopMark" column="shop_mark"/>
+</resultMap>
+</mapper>

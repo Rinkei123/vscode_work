@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.jp.mri_itstudy.vcoupon.dao.ShopCategoryDao">
+
+<select id="getShopCategories" resultMap="ShopCategoryMap">
+    SELECT *
+    FROM vcoupon_shop_category
+    WHERE category_status = 0
+    ORDER BY category_id
+    limit 0,15; <!-- 根据需要的列排序，这里暂时使用 category_id 排序 -->
+</select>
+
+<resultMap id="ShopCategoryMap" type="co.jp.mri_itstudy.vcoupon.entity.ShopCategoryEntity">
+    <id property="categoryId" column="category_id"/>
+    <result property="categoryName" column="category_name"/>
+    <result property="categoryDescription" column="category_description"/>
+    <result property="categoryCtime" column="category_ctime"/>
+    <result property="categoryStatus" column="category_status"/>
+    <result property="categoryImg" column="category_img"/>
+</resultMap>   
+</mapper>

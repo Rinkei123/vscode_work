@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.jp.mri_itstudy.vcoupon.dao.BannerDao">
+
+    <select id="getLatestBanners" resultMap="BannerMap">
+        SELECT *
+        FROM vcoupon_banner
+        WHERE is_active = 1
+        ORDER BY banner_id DESC
+        LIMIT 4
+    </select>
+
+    <resultMap id="BannerMap" type="co.jp.mri_itstudy.vcoupon.entity.BannerEntity">
+        <id property="bannerId" column="banner_id"/>
+        <result property="title" column="title"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="targetUrl" column="target_url"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="isActive" column="is_active"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+</mapper>
